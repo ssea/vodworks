@@ -25,8 +25,4 @@ class HomeController extends Controller
     {
         return view('dashboard.index');
     }
-
-    // public function dashboard(){
-    //     return view('dashboard.index');
-    // }
 }

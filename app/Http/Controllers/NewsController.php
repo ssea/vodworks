@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\News;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 // import the Intervention Image Manager Class
 use Intervention\Image\ImageManagerStatic as Image;
@@ -17,7 +18,17 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::get();
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImY1NmJhYTc2ZWQwYjZmYjMzY2FkMzMwYmQ3ZGMzOTBkZTJlMWE1ZTUyNTY2MmM4Y2Q4ZGM3NDhkMzY3ZWFmNDAxNjMxYzRhYTUwMDczNDEyIn0.eyJhdWQiOiIyIiwianRpIjoiZjU2YmFhNzZlZDBiNmZiMzNjYWQzMzBiZDdkYzM5MGRlMmUxYTVlNTI1NjYyYzhjZDhkYzc0OGQzNjdlYWY0MDE2MzFjNGFhNTAwNzM0MTIiLCJpYXQiOjE1NTgxNTc1MjIsIm5iZiI6MTU1ODE1NzUyMiwiZXhwIjoxNTg5Nzc5OTIyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.JUk5krQFQf7W6tby5qDNE6Go1Bk3gE0zkZ2yotZfQt6wz4cFnDf9pdTVtp5Su5B1Pq5ozRk408melDvKQG_p5pYZenZaCtnLv7LHEpcMDnhtloCDlmCbowgTFcbR25PUWE68fru0gD4Qx9yxdGTLCRzXFrxpWo1J6ULygxIDzScM7vc3nu_1806BGY_1YhvWO-JytdyRt6XDQtHqOP6QDQ4HXkT0-Bsyx72Iz6Ce71NeY6HbJGoCD716eT_TI1oGmM3CdteTEsBcR0B477KcfYdkgxvw-5uqM2G9_u9wEeZ_QC6BMU0nTpOtFByFaJSdZVunnLWwMY1E5mwg0PGWJOgmCpeBkhcISSYopN5F5NJu4atnUhR0pz_6o3v7JjHoNOmxZadPRSVTPRxL3BQjoO6WUJ2ZdN39iZJ9LMnwHHN70MqiE7HhzWrQBoB47cE-sHfHYvZ9H-54OZuK_p2wXcm6zE2xt3FkQ2OZeefcxVrbHFsQx2v3-M5UVkzd5-dMIBysudlFQzcAGIjTqX4dpKc9EoiAcK-kcz4JoBjp1UrFm_9mvN2QYDBAsDVVWfYd5fttGIML_4IA3A-mzQejDABc_dVUwyfQvJy4u3TQC8G1EzHHSAoPqkvAfZ6_MCg9W3nFnNKJnYgGAfalTyLxTI5Br6Ozd561hst6vAdiY6A';
+        $client = new Client();
+
+        $Req = $client->get('http://vodworks.test//api/news/', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ]);
+        $response = $Req->getBody()->getContents();
+        $news = json_decode($response);
+
         return view('dashboard.index', compact('news'));
     }
 
@@ -80,30 +91,20 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        //
-    }
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImY1NmJhYTc2ZWQwYjZmYjMzY2FkMzMwYmQ3ZGMzOTBkZTJlMWE1ZTUyNTY2MmM4Y2Q4ZGM3NDhkMzY3ZWFmNDAxNjMxYzRhYTUwMDczNDEyIn0.eyJhdWQiOiIyIiwianRpIjoiZjU2YmFhNzZlZDBiNmZiMzNjYWQzMzBiZDdkYzM5MGRlMmUxYTVlNTI1NjYyYzhjZDhkYzc0OGQzNjdlYWY0MDE2MzFjNGFhNTAwNzM0MTIiLCJpYXQiOjE1NTgxNTc1MjIsIm5iZiI6MTU1ODE1NzUyMiwiZXhwIjoxNTg5Nzc5OTIyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.JUk5krQFQf7W6tby5qDNE6Go1Bk3gE0zkZ2yotZfQt6wz4cFnDf9pdTVtp5Su5B1Pq5ozRk408melDvKQG_p5pYZenZaCtnLv7LHEpcMDnhtloCDlmCbowgTFcbR25PUWE68fru0gD4Qx9yxdGTLCRzXFrxpWo1J6ULygxIDzScM7vc3nu_1806BGY_1YhvWO-JytdyRt6XDQtHqOP6QDQ4HXkT0-Bsyx72Iz6Ce71NeY6HbJGoCD716eT_TI1oGmM3CdteTEsBcR0B477KcfYdkgxvw-5uqM2G9_u9wEeZ_QC6BMU0nTpOtFByFaJSdZVunnLWwMY1E5mwg0PGWJOgmCpeBkhcISSYopN5F5NJu4atnUhR0pz_6o3v7JjHoNOmxZadPRSVTPRxL3BQjoO6WUJ2ZdN39iZJ9LMnwHHN70MqiE7HhzWrQBoB47cE-sHfHYvZ9H-54OZuK_p2wXcm6zE2xt3FkQ2OZeefcxVrbHFsQx2v3-M5UVkzd5-dMIBysudlFQzcAGIjTqX4dpKc9EoiAcK-kcz4JoBjp1UrFm_9mvN2QYDBAsDVVWfYd5fttGIML_4IA3A-mzQejDABc_dVUwyfQvJy4u3TQC8G1EzHHSAoPqkvAfZ6_MCg9W3nFnNKJnYgGAfalTyLxTI5Br6Ozd561hst6vAdiY6A';
+        $client = new Client();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(News $news)
-    {
-        //
-    }
+        $Req = $client->get('http://vodworks.test//api/news/'.$news->id, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ]);
+        $response = $Req->getBody()->getContents();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, News $news)
-    {
-        //
+        $news = json_decode($response);
+
+
+        return view('news.detail', compact('news'));
     }
 
     /**

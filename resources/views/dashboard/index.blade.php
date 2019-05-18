@@ -44,6 +44,7 @@
                                                 <td>{{ $row->description }}</td>
                                                 <td>{{ $row->created_at }}</td>
                                                 <td class="text-right">
+                                                    <a href="/news/{{ $row->id }}" role="button">Show news detail</a> |
                                                     {!! Html::decode(link_to( "/news/$row->id", 'Remove', $attributes = array('class' => 'delete-btn', 'onClick'=>'return false;'))) !!}
                                                 </td>
                                             </tr>
